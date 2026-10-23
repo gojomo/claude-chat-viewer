@@ -28,10 +28,10 @@ export default defineConfig({
           if (id.includes("/node_modules/react/") || id.includes("/node_modules/react-dom/")) {
             return "vendor-react";
           }
-          if (
-            id.includes("/node_modules/react-syntax-highlighter/") ||
-            id.includes("/node_modules/prismjs/")
-          ) {
+          // prismjs (core + language components) is deliberately not given a manual
+          // chunk: the components use a bare global `Prism`, so the bundler must keep
+          // them ordered after the core, which a shared chunk does not preserve.
+          if (id.includes("/node_modules/react-syntax-highlighter/")) {
             return "vendor-syntax";
           }
           if (id.includes("/node_modules/jszip/")) {
